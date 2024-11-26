@@ -52,6 +52,7 @@
                         <th>Toplam</th>
                         <th>Banka</th>
                         <th>İmza</th>
+                        <th>Düzenle</th>
                         <th>Sil</th>
                     </tr>
                 </thead>
@@ -65,7 +66,44 @@
             <p><strong>Güncel Toplam:</strong> <span id="guncel-toplam">0</span></p>
         </div>
     </div>
-    <!-- Bootstrap Modal -->
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Kayıt Düzenle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-form">
+                        <div class="mb-3">
+                            <input type="date" id="edit-tarih" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="edit-isim" class="form-control" placeholder="İsim" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" id="edit-gelen" class="form-control" placeholder="Gelen" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="number" id="edit-giden" class="form-control" placeholder="Giden" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="edit-banka" class="form-control" placeholder="Banka" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" id="edit-imza" class="form-control" placeholder="İmza" required>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Delete Modal -->
     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel"
         aria-hidden="true">
         <div class="modal-dialog">

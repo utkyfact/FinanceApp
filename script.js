@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmDeleteButton = document.getElementById('confirmDeleteButton');
     let rowToDelete = null;
 
+    const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+    let rowToEdit = null;
+
+
     const gelenToplamElement = document.getElementById('gelen-toplam');
     const gidenToplamElement = document.getElementById('giden-toplam');
     const guncelToplamElement = document.getElementById('guncel-toplam');
@@ -17,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
-  
+
         const tarih = document.getElementById('tarih').value;
         const isim = document.getElementById('isim').value;
         const gelen = parseFloat(document.getElementById('gelen').value) || 0;
@@ -37,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <td>${toplam}</td>
         <td>${banka}</td>
         <td>${imza}</td>
+        <td><button class="btn btn-warning btn-sm edit-btn">Düzenle</button></td>
         <td><button class="btn btn-danger btn-sm delete-btn">Sil</button></td>
       `;
 
@@ -56,6 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target.classList.contains('delete-btn')) {
             rowToDelete = e.target.closest('tr');
             modal.show();
+        } else if (e.target.classList.contains('edit-btn')) {
+            rowToEdit = e.target.closest('tr');
+            const cells = rowToEdit.querySelectorAll('td');
+
+            document.getElementById('edit-tarih').value = cells[0].textContent;
+            document.getElementById('edit-isim').value = cells[1].textContent;
+            document.getElementById('edit-gelen').value = cells[2].textContent;
+            document.getElementById('edit-giden').value = cells[3].textContent;
+            document.getElementById('edit-banka').value = cells[5].textContent;
+            document.getElementById('edit-imza').value = cells[6].textContent;
+
+            editModal.show();
         }
     });
 
@@ -67,6 +84,31 @@ document.addEventListener('DOMContentLoaded', () => {
             updateSummary();
             modal.hide();
             rowToDelete = null;
+        }
+    });
+
+    // Edit form
+    document.getElementById('edit-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        if (rowToEdit) {
+            const gelen = parseFloat(document.getElementById('edit-gelen').value) || 0;
+            const giden = parseFloat(document.getElementById('edit-giden').value) || 0;
+            const toplam = gelen - giden;
+
+            const cells = rowToEdit.querySelectorAll('td');
+            cells[0].textContent = document.getElementById('edit-tarih').value;
+            cells[1].textContent = document.getElementById('edit-isim').value;
+            cells[2].textContent = gelen;
+            cells[3].textContent = giden;
+            cells[4].textContent = toplam;
+            cells[5].textContent = document.getElementById('edit-banka').value;
+            cells[6].textContent = document.getElementById('edit-imza').value;
+
+            saveTableData();
+            updateSummary();
+            editModal.hide();
+            rowToEdit = null;
         }
     });
 
@@ -99,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td>${item.toplam}</td>
           <td>${item.banka}</td>
           <td>${item.imza}</td>
+          <td><button class="btn btn-warning btn-sm edit-btn">Düzenle</button></td>
           <td><button class="btn btn-danger btn-sm delete-btn">Sil</button></td>
         `;
             tableBody.appendChild(row);
