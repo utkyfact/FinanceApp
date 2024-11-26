@@ -31,5 +31,5 @@ A web application to manage financial records using a responsive table. Users ca
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/utkyfact/finance-table-app.git
-cd finance-table-app
+git clone https://github.com/utkyfact/financeApp.git
+cd financeApp
